@@ -34,6 +34,7 @@ for j = 1:n
         htheta = sigmoid ( X(i,:) * theta);
         sumGrad = sumGrad + ((htheta - y(i)) * X(i,j));
     end
+
     
     grad(j) = sumGrad / m;
     sumGrad = 0;
