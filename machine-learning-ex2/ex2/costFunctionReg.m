@@ -22,19 +22,38 @@ n = size(X)(2); % number of features
 sumi = 0;
 sumGrad = 0;
 htheta = 0;
+regTerm = 0;
+sumSquareTheta = 0;
 for i =  1:m
     htheta = sigmoid ( X(i,:) * theta);
     sumi = sumi + (-y(i) * log(htheta) - ((1-y(i)) * log(1-htheta)));
 end
-J = sumi / m;
+for i = 2:n
+    sumSquareTheta = sumSquareTheta  + theta(i)^2;
+end
+regTerm = (lambda / (2*m)) * sumSquareTheta;
+%printf ("%f",regTerm);
+J = (sumi / m) + regTerm;
 
-for j = 1:n
+j = 1;
+for i = 1:m
+    htheta = sigmoid ( X(i,:) * theta);
+    sumGrad = sumGrad + ((htheta - y(i)) * X(i,j));
+end
+
+grad(j) = sumGrad / m;
+sumGrad = 0;
+
+
+for j = 2:n
     for i = 1:m
         htheta = sigmoid ( X(i,:) * theta);
         sumGrad = sumGrad + ((htheta - y(i)) * X(i,j));
     end
 
-    grad(j) = sumGrad / m;
+    regTerm = (lambda / m) * theta(j);
+
+    grad(j) = (sumGrad / m) + regTerm;
     sumGrad = 0;
 end
 
