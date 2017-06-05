@@ -18,7 +18,25 @@ grad = zeros(size(theta));
 %               derivatives of the cost w.r.t. each parameter in theta
 
 
+n = size(X)(2); % number of features
+sumi = 0;
+sumGrad = 0;
+htheta = 0;
+for i =  1:m
+    htheta = sigmoid ( X(i,:) * theta);
+    sumi = sumi + (-y(i) * log(htheta) - ((1-y(i)) * log(1-htheta)));
+end
+J = sumi / m;
 
+for j = 1:n
+    for i = 1:m
+        htheta = sigmoid ( X(i,:) * theta);
+        sumGrad = sumGrad + ((htheta - y(i)) * X(i,j));
+    end
+
+    grad(j) = sumGrad / m;
+    sumGrad = 0;
+end
 
 
 
