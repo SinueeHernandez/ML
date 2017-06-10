@@ -37,7 +37,26 @@ grad = zeros(size(theta));
 %
 
 
+n = size(X)(2); % number of features
+sumi = 0;
+sumGrad = 0;
+htheta = 0;
+%for i =  1:m
+    htheta = sigmoid ( X * theta );
+    sumi = (-y' * log(htheta)) - ((1 -y') * log(1-htheta));
+%end
+J = sumi / m;
 
+for j = 1:n
+    for i = 1:m
+        htheta = sigmoid ( X(i,:) * theta);
+        sumGrad = sumGrad + ((htheta - y(i)) * X(i,j));
+    end
+
+    
+    grad(j) = sumGrad / m;
+    sumGrad = 0;
+end
 
 
 
